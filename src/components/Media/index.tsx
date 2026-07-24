@@ -15,6 +15,5 @@ export const Media: React.FC<Props> = (props) => {
     return <Fragment>{content}</Fragment>
   }
 
-  const Tag = htmlElement
-  return <Tag className={className}>{content}</Tag>
+  return React.createElement(htmlElement, { className }, content)
 }
