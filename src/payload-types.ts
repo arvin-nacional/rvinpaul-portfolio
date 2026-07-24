@@ -201,7 +201,9 @@ export interface Page {
       | null;
     media?: (string | null) | Media;
   };
-  layout: (ThreeHeroBlock | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock)[];
+  layout: (
+    ThreeHeroBlock | DevelopmentProcessBlock | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock
+  )[];
   meta?: {
     title?: string | null;
     /**
@@ -503,6 +505,31 @@ export interface ThreeHeroBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'threeHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DevelopmentProcessBlock".
+ */
+export interface DevelopmentProcessBlock {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  /**
+   * Seven steps create the desktop snake layout shown on the site.
+   */
+  steps: {
+    title: string;
+    description: string;
+    /**
+     * Short technologies or deliverables separated with bullets.
+     */
+    details: string;
+    icon: 'discover' | 'plan' | 'design' | 'build' | 'test' | 'deploy' | 'iterate';
+    id?: string | null;
+  }[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'developmentProcess';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1141,6 +1168,7 @@ export interface PagesSelect<T extends boolean = true> {
     | T
     | {
         threeHero?: T | ThreeHeroBlockSelect<T>;
+        developmentProcess?: T | DevelopmentProcessBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
@@ -1192,6 +1220,26 @@ export interface ThreeHeroBlockSelect<T extends boolean = true> {
       };
   fallbackMedia?: T;
   showSportsDetails?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "DevelopmentProcessBlock_select".
+ */
+export interface DevelopmentProcessBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  steps?:
+    | T
+    | {
+        title?: T;
+        description?: T;
+        details?: T;
+        icon?: T;
+        id?: T;
+      };
   id?: T;
   blockName?: T;
 }

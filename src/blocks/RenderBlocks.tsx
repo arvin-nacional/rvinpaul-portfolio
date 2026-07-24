@@ -5,6 +5,7 @@ import type { Page } from '@/payload-types'
 import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { CallToActionBlock } from '@/blocks/CallToAction/Component'
 import { ContentBlock } from '@/blocks/Content/Component'
+import { DevelopmentProcessBlock } from '@/blocks/DevelopmentProcess/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ThreeHeroBlock } from '@/blocks/ThreeHero/Component'
@@ -12,6 +13,7 @@ import { ThreeHeroBlock } from '@/blocks/ThreeHero/Component'
 const blockComponents = {
   archive: ArchiveBlock,
   content: ContentBlock,
+  developmentProcess: DevelopmentProcessBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
   mediaBlock: MediaBlock,
@@ -36,7 +38,14 @@ export const RenderBlocks: React.FC<{
 
             if (Block) {
               return (
-                <div className={blockType === 'threeHero' ? 'my-0' : 'my-16'} key={index}>
+                <div
+                  className={
+                    blockType === 'threeHero' || blockType === 'developmentProcess'
+                      ? 'my-0'
+                      : 'my-16'
+                  }
+                  key={index}
+                >
                   {/* @ts-expect-error there may be some mismatch between the expected types here */}
                   <Block {...block} disableInnerContainer />
                 </div>
