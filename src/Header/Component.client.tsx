@@ -58,11 +58,7 @@ export const HeaderClient: React.FC<HeaderClientProps> = ({ data }) => {
         )}
       >
         <Link className="relative z-10 shrink-0" href="/">
-          <Logo
-            loading="eager"
-            priority="high"
-            className="max-w-[7.5rem] brightness-0 invert md:max-w-[8.5rem]"
-          />
+          <Logo loading="eager" priority="high" className="max-w-[7.5rem] md:max-w-[8.5rem]" />
         </Link>
         <HeaderNav data={data} />
       </div>

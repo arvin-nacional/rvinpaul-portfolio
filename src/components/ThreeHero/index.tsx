@@ -346,17 +346,19 @@ function Track() {
 }
 
 function Scene({
+  centered,
   reducedMotion,
   showSportsDetails,
   technologies,
 }: {
+  centered: boolean
   reducedMotion: boolean
   showSportsDetails: boolean
   technologies: string[]
 }) {
   const rig = useRef<Group>(null)
   const { pointer, viewport } = useThree()
-  const sceneX = MathUtils.clamp(viewport.width * 0.18, 1.35, 3.1)
+  const sceneX = centered ? 0.55 : MathUtils.clamp(viewport.width * 0.18, 1.35, 3.1)
   const sceneBlocks = defaultBlocks.map((block, index) => ({
     ...block,
     label: technologies[index] || block.label,
@@ -460,11 +462,13 @@ function useReducedMotion() {
 }
 
 type ThreeHeroProps = {
+  centered?: boolean
   showSportsDetails?: boolean | null
   technologies?: string[]
 }
 
 export function ThreeHero({
+  centered = false,
   showSportsDetails = true,
   technologies = defaultBlocks.map(({ label }) => label),
 }: ThreeHeroProps) {
@@ -483,6 +487,7 @@ export function ThreeHero({
         }}
       >
         <Scene
+          centered={centered}
           reducedMotion={reducedMotion}
           showSportsDetails={showSportsDetails ?? true}
           technologies={technologies}
