@@ -1,7 +1,7 @@
 import { Button, type ButtonProps } from '@/components/ui/button'
 import { getMediaUrl } from '@/utilities/getMediaUrl'
 import { cn } from '@/utilities/ui'
-import { Download } from 'lucide-react'
+import { ArrowDownToLine } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -65,7 +65,9 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   if (appearance === 'inline') {
     return (
       <Link className={cn(className)} href={href || url || ''} {...linkProps}>
-        {type === 'file' && <Download aria-hidden="true" className="size-4 shrink-0" />}
+        {type === 'file' && (
+          <ArrowDownToLine aria-hidden="true" className="size-[15px] shrink-0 stroke-[1.75]" />
+        )}
         {label && label}
         {children && children}
       </Link>
@@ -75,7 +77,9 @@ export const CMSLink: React.FC<CMSLinkType> = (props) => {
   return (
     <Button asChild className={className} size={size} variant={appearance}>
       <Link className={cn(className)} href={href || url || ''} {...linkProps}>
-        {type === 'file' && <Download aria-hidden="true" className="size-4 shrink-0" />}
+        {type === 'file' && (
+          <ArrowDownToLine aria-hidden="true" className="size-[15px] shrink-0 stroke-[1.75]" />
+        )}
         {label && label}
         {children && children}
       </Link>
