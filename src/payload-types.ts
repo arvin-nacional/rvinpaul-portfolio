@@ -69,6 +69,7 @@ export interface Config {
   collections: {
     pages: Page;
     posts: Post;
+    projects: Project;
     media: Media;
     categories: Category;
     users: User;
@@ -91,6 +92,7 @@ export interface Config {
   collectionsSelect: {
     pages: PagesSelect<false> | PagesSelect<true>;
     posts: PostsSelect<false> | PostsSelect<true>;
+    projects: ProjectsSelect<false> | ProjectsSelect<true>;
     media: MediaSelect<false> | MediaSelect<true>;
     categories: CategoriesSelect<false> | CategoriesSelect<true>;
     users: UsersSelect<false> | UsersSelect<true>;
@@ -202,7 +204,14 @@ export interface Page {
     media?: (string | null) | Media;
   };
   layout: (
-    ThreeHeroBlock | DevelopmentProcessBlock | CallToActionBlock | ContentBlock | MediaBlock | ArchiveBlock | FormBlock
+    | ThreeHeroBlock
+    | DevelopmentProcessBlock
+    | FeaturedProjectsBlock
+    | CallToActionBlock
+    | ContentBlock
+    | MediaBlock
+    | ArchiveBlock
+    | FormBlock
   )[];
   meta?: {
     title?: string | null;
@@ -530,6 +539,133 @@ export interface DevelopmentProcessBlock {
   id?: string | null;
   blockName?: string | null;
   blockType: 'developmentProcess';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedProjectsBlock".
+ */
+export interface FeaturedProjectsBlock {
+  eyebrow: string;
+  heading: string;
+  description: string;
+  /**
+   * Select and order the projects that should appear in this section.
+   */
+  projects: (string | Project)[];
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'featuredProjects';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects".
+ */
+export interface Project {
+  id: string;
+  title: string;
+  layout: (ProjectHeroBlock | ProjectOverviewBlock | ProjectHighlightsBlock | ProjectCTABlock)[];
+  meta?: {
+    title?: string | null;
+    /**
+     * Maximum upload file size: 12MB. Recommended file size for images is <500KB.
+     */
+    image?: (string | null) | Media;
+    description?: string | null;
+  };
+  publishedAt?: string | null;
+  /**
+   * When enabled, the slug will auto-generate from the title field on save and autosave.
+   */
+  generateSlug?: boolean | null;
+  slug: string;
+  updatedAt: string;
+  createdAt: string;
+  _status?: ('draft' | 'published') | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectHeroBlock".
+ */
+export interface ProjectHeroBlock {
+  projectNumber: string;
+  heading: string;
+  subtitle: string;
+  description: string;
+  previewImage?: (string | null) | Media;
+  liveSiteURL?: string | null;
+  liveSiteLabel?: string | null;
+  details?:
+    | {
+        label: string;
+        value: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectHero';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectOverviewBlock".
+ */
+export interface ProjectOverviewBlock {
+  /**
+   * Optional URL anchor, without the #.
+   */
+  anchor?: string | null;
+  challengeEyebrow: string;
+  challengeHeading: string;
+  challengeDescription: string;
+  solutionEyebrow: string;
+  solutionHeading: string;
+  solutionDescription: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectOverview';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectHighlightsBlock".
+ */
+export interface ProjectHighlightsBlock {
+  /**
+   * Optional URL anchor, without the #.
+   */
+  anchor?: string | null;
+  featuresEyebrow: string;
+  featuresHeading: string;
+  features?:
+    | {
+        text: string;
+        id?: string | null;
+      }[]
+    | null;
+  outcomesEyebrow: string;
+  outcomes?:
+    | {
+        icon: 'globe' | 'route' | 'gauge' | 'shield' | 'package' | 'check';
+        title: string;
+        description: string;
+        id?: string | null;
+      }[]
+    | null;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectHighlights';
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectCTABlock".
+ */
+export interface ProjectCTABlock {
+  heading: string;
+  description: string;
+  buttonLabel: string;
+  buttonURL: string;
+  id?: string | null;
+  blockName?: string | null;
+  blockType: 'projectCTA';
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1063,6 +1199,10 @@ export interface PayloadLockedDocument {
         value: string | Post;
       } | null)
     | ({
+        relationTo: 'projects';
+        value: string | Project;
+      } | null)
+    | ({
         relationTo: 'media';
         value: string | Media;
       } | null)
@@ -1169,6 +1309,7 @@ export interface PagesSelect<T extends boolean = true> {
     | {
         threeHero?: T | ThreeHeroBlockSelect<T>;
         developmentProcess?: T | DevelopmentProcessBlockSelect<T>;
+        featuredProjects?: T | FeaturedProjectsBlockSelect<T>;
         cta?: T | CallToActionBlockSelect<T>;
         content?: T | ContentBlockSelect<T>;
         mediaBlock?: T | MediaBlockSelect<T>;
@@ -1240,6 +1381,18 @@ export interface DevelopmentProcessBlockSelect<T extends boolean = true> {
         icon?: T;
         id?: T;
       };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "FeaturedProjectsBlock_select".
+ */
+export interface FeaturedProjectsBlockSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  projects?: T;
   id?: T;
   blockName?: T;
 }
@@ -1357,6 +1510,109 @@ export interface PostsSelect<T extends boolean = true> {
   updatedAt?: T;
   createdAt?: T;
   _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "projects_select".
+ */
+export interface ProjectsSelect<T extends boolean = true> {
+  title?: T;
+  layout?:
+    | T
+    | {
+        projectHero?: T | ProjectHeroBlockSelect<T>;
+        projectOverview?: T | ProjectOverviewBlockSelect<T>;
+        projectHighlights?: T | ProjectHighlightsBlockSelect<T>;
+        projectCTA?: T | ProjectCTABlockSelect<T>;
+      };
+  meta?:
+    | T
+    | {
+        title?: T;
+        image?: T;
+        description?: T;
+      };
+  publishedAt?: T;
+  generateSlug?: T;
+  slug?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  _status?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectHeroBlock_select".
+ */
+export interface ProjectHeroBlockSelect<T extends boolean = true> {
+  projectNumber?: T;
+  heading?: T;
+  subtitle?: T;
+  description?: T;
+  previewImage?: T;
+  liveSiteURL?: T;
+  liveSiteLabel?: T;
+  details?:
+    | T
+    | {
+        label?: T;
+        value?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectOverviewBlock_select".
+ */
+export interface ProjectOverviewBlockSelect<T extends boolean = true> {
+  anchor?: T;
+  challengeEyebrow?: T;
+  challengeHeading?: T;
+  challengeDescription?: T;
+  solutionEyebrow?: T;
+  solutionHeading?: T;
+  solutionDescription?: T;
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectHighlightsBlock_select".
+ */
+export interface ProjectHighlightsBlockSelect<T extends boolean = true> {
+  anchor?: T;
+  featuresEyebrow?: T;
+  featuresHeading?: T;
+  features?:
+    | T
+    | {
+        text?: T;
+        id?: T;
+      };
+  outcomesEyebrow?: T;
+  outcomes?:
+    | T
+    | {
+        icon?: T;
+        title?: T;
+        description?: T;
+        id?: T;
+      };
+  id?: T;
+  blockName?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "ProjectCTABlock_select".
+ */
+export interface ProjectCTABlockSelect<T extends boolean = true> {
+  heading?: T;
+  description?: T;
+  buttonLabel?: T;
+  buttonURL?: T;
+  id?: T;
+  blockName?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -1805,6 +2061,16 @@ export interface Header {
  */
 export interface Footer {
   id: string;
+  eyebrow: string;
+  heading: string;
+  description: string;
+  email: string;
+  location: string;
+  availability: string;
+  /**
+   * Link to your résumé or CV. Leave empty to hide the résumé button.
+   */
+  resumeURL?: string | null;
   navItems?:
     | {
         link: {
@@ -1822,6 +2088,16 @@ export interface Footer {
           url?: string | null;
           label: string;
         };
+        id?: string | null;
+      }[]
+    | null;
+  /**
+   * Social profiles and external links displayed in the footer.
+   */
+  socialLinks?:
+    | {
+        label: string;
+        url: string;
         id?: string | null;
       }[]
     | null;
@@ -1856,6 +2132,13 @@ export interface HeaderSelect<T extends boolean = true> {
  * via the `definition` "footer_select".
  */
 export interface FooterSelect<T extends boolean = true> {
+  eyebrow?: T;
+  heading?: T;
+  description?: T;
+  email?: T;
+  location?: T;
+  availability?: T;
+  resumeURL?: T;
   navItems?:
     | T
     | {
@@ -1868,6 +2151,13 @@ export interface FooterSelect<T extends boolean = true> {
               url?: T;
               label?: T;
             };
+        id?: T;
+      };
+  socialLinks?:
+    | T
+    | {
+        label?: T;
+        url?: T;
         id?: T;
       };
   updatedAt?: T;
@@ -1900,6 +2190,10 @@ export interface TaskSchedulePublish {
       | ({
           relationTo: 'posts';
           value: string | Post;
+        } | null)
+      | ({
+          relationTo: 'projects';
+          value: string | Project;
         } | null);
     global?: string | null;
     user?: (string | null) | User;

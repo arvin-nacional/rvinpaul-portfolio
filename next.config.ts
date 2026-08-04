@@ -7,6 +7,9 @@ const __filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(__filename)
 import { redirects } from './redirects'
 
+const useGestureTypesPath = path.resolve(dirname, 'src/shims/useGestureCoreTypes.ts')
+const useGestureTypesTurbopackPath = './src/shims/useGestureCoreTypes.ts'
+
 const NEXT_PUBLIC_SERVER_URL = process.env.VERCEL_PROJECT_PRODUCTION_URL
   ? `https://${process.env.VERCEL_PROJECT_PRODUCTION_URL}`
   : process.env.__NEXT_PRIVATE_ORIGIN || 'http://localhost:3000'
@@ -18,6 +21,7 @@ const nextConfig: NextConfig = {
     loadPaths: ['./node_modules/@payloadcms/ui/dist/scss/'],
   },
   images: {
+    unoptimized: true,
     localPatterns: [
       {
         pathname: '/api/media/file/**',
@@ -36,6 +40,10 @@ const nextConfig: NextConfig = {
     ],
   },
   webpack: (webpackConfig) => {
+    webpackConfig.resolve.alias = {
+      ...webpackConfig.resolve.alias,
+      '@use-gesture/core/types': useGestureTypesPath,
+    }
     webpackConfig.resolve.extensionAlias = {
       '.cjs': ['.cts', '.cjs'],
       '.js': ['.ts', '.tsx', '.js', '.jsx'],
@@ -48,6 +56,9 @@ const nextConfig: NextConfig = {
   redirects,
   turbopack: {
     root: path.resolve(dirname),
+    resolveAlias: {
+      '@use-gesture/core/types': useGestureTypesTurbopackPath,
+    },
   },
 }
 

@@ -2,9 +2,25 @@
 
 import type { ThreeHeroBlock as ThreeHeroBlockProps } from '@/payload-types'
 
+import { useEffect, useState } from 'react'
+
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { ThreeHero } from '@/components/ThreeHero'
+
+function useIsMobile(breakpoint = 768) {
+  const [isMobile, setIsMobile] = useState<boolean | null>(null)
+
+  useEffect(() => {
+    const mq = window.matchMedia(`(max-width: ${breakpoint - 1}px)`)
+    const check = () => setIsMobile(mq.matches)
+    check()
+    mq.addEventListener('change', check)
+    return () => mq.removeEventListener('change', check)
+  }, [breakpoint])
+
+  return isMobile
+}
 
 export const ThreeHeroBlock: React.FC<ThreeHeroBlockProps> = ({
   eyebrow,
@@ -16,15 +32,18 @@ export const ThreeHeroBlock: React.FC<ThreeHeroBlockProps> = ({
   technologies,
 }) => {
   const labels = technologies?.map(({ label }) => label) ?? []
+  const isMobile = useIsMobile()
 
   return (
     <section
       className="relative overflow-hidden bg-[#02050b] text-white md:min-h-[100svh]"
       data-theme="dark"
     >
-      <div className="absolute inset-0 hidden pb-24 md:block" aria-hidden="true">
-        <ThreeHero showSportsDetails={showSportsDetails} technologies={labels} />
-      </div>
+      {isMobile === false && (
+        <div className="absolute inset-0 pb-24" aria-hidden="true">
+          <ThreeHero showSportsDetails={showSportsDetails} technologies={labels} />
+        </div>
+      )}
 
       <div className="pointer-events-none absolute inset-0 hidden bg-[linear-gradient(90deg,rgba(2,5,11,0.98)_0%,rgba(2,5,11,0.86)_35%,rgba(2,5,11,0.15)_68%,rgba(2,5,11,0.2)_100%)] md:block" />
       <div className="pointer-events-none absolute inset-x-0 bottom-0 hidden h-40 bg-gradient-to-t from-[#02050b] to-transparent md:block" />
@@ -64,9 +83,11 @@ export const ThreeHeroBlock: React.FC<ThreeHeroBlockProps> = ({
           )}
         </div>
 
-        <div className="pointer-events-auto -mx-4 mt-4 h-[100vw] md:hidden" aria-hidden="true">
-          <ThreeHero centered showSportsDetails={showSportsDetails} technologies={labels} />
-        </div>
+        {isMobile === true && (
+          <div className="pointer-events-auto -mx-4 mt-4 h-[100vw]" aria-hidden="true">
+            <ThreeHero centered showSportsDetails={showSportsDetails} technologies={labels} />
+          </div>
+        )}
       </div>
 
       <div className="absolute right-5 bottom-6 z-10 hidden items-center gap-3 font-mono text-[0.62rem] tracking-[0.16em] text-white/45 uppercase md:flex">

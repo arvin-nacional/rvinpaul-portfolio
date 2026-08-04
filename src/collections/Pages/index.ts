@@ -9,6 +9,7 @@ import { FormBlock } from '../../blocks/Form/config'
 import { MediaBlock } from '../../blocks/MediaBlock/config'
 import { DevelopmentProcess } from '../../blocks/DevelopmentProcess/config'
 import { ThreeHero } from '../../blocks/ThreeHero/config'
+import { FeaturedProjects } from '../../blocks/FeaturedProjects/config'
 import { hero } from '@/heros/config'
 import { slugField } from 'payload'
 import { populatePublishedAt } from '../../hooks/populatePublishedAt'
@@ -77,6 +78,7 @@ export const Pages: CollectionConfig<'pages'> = {
               blocks: [
                 ThreeHero,
                 DevelopmentProcess,
+                FeaturedProjects,
                 CallToAction,
                 Content,
                 MediaBlock,

@@ -9,6 +9,7 @@ import { DevelopmentProcessBlock } from '@/blocks/DevelopmentProcess/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { MediaBlock } from '@/blocks/MediaBlock/Component'
 import { ThreeHeroBlock } from '@/blocks/ThreeHero/Component'
+import { FeaturedProjectsBlock } from '@/blocks/FeaturedProjects/Component'
 
 const blockComponents = {
   archive: ArchiveBlock,
@@ -16,6 +17,7 @@ const blockComponents = {
   developmentProcess: DevelopmentProcessBlock,
   cta: CallToActionBlock,
   formBlock: FormBlock,
+  featuredProjects: FeaturedProjectsBlock,
   mediaBlock: MediaBlock,
   threeHero: ThreeHeroBlock,
 }
@@ -40,7 +42,9 @@ export const RenderBlocks: React.FC<{
               return (
                 <div
                   className={
-                    blockType === 'threeHero' || blockType === 'developmentProcess'
+                    blockType === 'threeHero' ||
+                    blockType === 'developmentProcess' ||
+                    blockType === 'featuredProjects'
                       ? 'my-0'
                       : 'my-16'
                   }

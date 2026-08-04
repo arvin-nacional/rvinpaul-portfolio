@@ -12,7 +12,6 @@ import { RenderHero } from '@/heros/RenderHero'
 import { generateMeta } from '@/utilities/generateMeta'
 import PageClient from './page.client'
 import { LivePreviewListener } from '@/components/LivePreviewListener'
-import { ProjectShowcase } from '@/components/ProjectShowcase'
 
 export async function generateStaticParams() {
   const payload = await getPayload({ config: configPromise })
@@ -77,7 +76,6 @@ export default async function Page({ params: paramsPromise }: Args) {
 
       <RenderHero {...hero} />
       <RenderBlocks blocks={layout} />
-      {decodedSlug === 'home' && <ProjectShowcase />}
     </article>
   )
 }
@@ -100,6 +98,7 @@ const queryPageBySlug = cache(async ({ slug }: { slug: string }) => {
 
   const result = await payload.find({
     collection: 'pages',
+    depth: 3,
     draft,
     limit: 1,
     pagination: false,

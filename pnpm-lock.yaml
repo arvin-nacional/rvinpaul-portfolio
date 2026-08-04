@@ -62,6 +62,9 @@ importers:
       '@react-three/fiber':
         specifier: ^9.6.1
         version: 9.6.1(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(three@0.185.1)
+      '@use-gesture/core':
+        specifier: 10.3.1
+        version: 10.3.1
       class-variance-authority:
         specifier: ^0.7.0
         version: 0.7.1
