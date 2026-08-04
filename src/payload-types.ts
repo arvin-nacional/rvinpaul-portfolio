@@ -180,7 +180,7 @@ export interface Page {
     links?:
       | {
           link: {
-            type?: ('reference' | 'custom') | null;
+            type?: ('reference' | 'custom' | 'file') | null;
             newTab?: boolean | null;
             reference?:
               | ({
@@ -192,6 +192,7 @@ export interface Page {
                   value: string | Post;
                 } | null);
             url?: string | null;
+            file?: (string | null) | Media;
             label: string;
             /**
              * Choose how the link should be rendered.
@@ -478,7 +479,7 @@ export interface ThreeHeroBlock {
   links?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'file') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -490,6 +491,7 @@ export interface ThreeHeroBlock {
                 value: string | Post;
               } | null);
           url?: string | null;
+          file?: (string | null) | Media;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -690,7 +692,7 @@ export interface CallToActionBlock {
   links?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'file') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -702,6 +704,7 @@ export interface CallToActionBlock {
                 value: string | Post;
               } | null);
           url?: string | null;
+          file?: (string | null) | Media;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -740,7 +743,7 @@ export interface ContentBlock {
         } | null;
         enableLink?: boolean | null;
         link?: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'file') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -752,6 +755,7 @@ export interface ContentBlock {
                 value: string | Post;
               } | null);
           url?: string | null;
+          file?: (string | null) | Media;
           label: string;
           /**
            * Choose how the link should be rendered.
@@ -1297,6 +1301,7 @@ export interface PagesSelect<T extends boolean = true> {
                     newTab?: T;
                     reference?: T;
                     url?: T;
+                    file?: T;
                     label?: T;
                     appearance?: T;
                   };
@@ -1348,6 +1353,7 @@ export interface ThreeHeroBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              file?: T;
               label?: T;
               appearance?: T;
             };
@@ -1412,6 +1418,7 @@ export interface CallToActionBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              file?: T;
               label?: T;
               appearance?: T;
             };
@@ -1438,6 +1445,7 @@ export interface ContentBlockSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              file?: T;
               label?: T;
               appearance?: T;
             };
@@ -2035,7 +2043,7 @@ export interface Header {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'file') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2047,6 +2055,7 @@ export interface Header {
                 value: string | Post;
               } | null);
           url?: string | null;
+          file?: (string | null) | Media;
           label: string;
         };
         id?: string | null;
@@ -2074,7 +2083,7 @@ export interface Footer {
   navItems?:
     | {
         link: {
-          type?: ('reference' | 'custom') | null;
+          type?: ('reference' | 'custom' | 'file') | null;
           newTab?: boolean | null;
           reference?:
             | ({
@@ -2086,6 +2095,7 @@ export interface Footer {
                 value: string | Post;
               } | null);
           url?: string | null;
+          file?: (string | null) | Media;
           label: string;
         };
         id?: string | null;
@@ -2119,6 +2129,7 @@ export interface HeaderSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              file?: T;
               label?: T;
             };
         id?: T;
@@ -2149,6 +2160,7 @@ export interface FooterSelect<T extends boolean = true> {
               newTab?: T;
               reference?: T;
               url?: T;
+              file?: T;
               label?: T;
             };
         id?: T;

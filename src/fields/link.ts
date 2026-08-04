@@ -49,12 +49,17 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
                 label: 'Custom URL',
                 value: 'custom',
               },
+              {
+                label: 'File download',
+                value: 'file',
+              },
             ],
           },
           {
             name: 'newTab',
             type: 'checkbox',
             admin: {
+              condition: (_, siblingData) => siblingData?.type !== 'file',
               style: {
                 alignSelf: 'flex-end',
               },
@@ -85,6 +90,16 @@ export const link: LinkType = ({ appearances, disableLabel = false, overrides = 
         condition: (_, siblingData) => siblingData?.type === 'custom',
       },
       label: 'Custom URL',
+      required: true,
+    },
+    {
+      name: 'file',
+      type: 'upload',
+      admin: {
+        condition: (_, siblingData) => siblingData?.type === 'file',
+      },
+      label: 'File to download',
+      relationTo: 'media',
       required: true,
     },
   ]
