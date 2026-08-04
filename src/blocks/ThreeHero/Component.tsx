@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import { CMSLink } from '@/components/Link'
 import RichText from '@/components/RichText'
 import { ThreeHero } from '@/components/ThreeHero'
+import { ArrowRight } from 'lucide-react'
 
 function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState<boolean | null>(null)
@@ -73,10 +74,15 @@ export const ThreeHeroBlock: React.FC<ThreeHeroBlockProps> = ({
                     {...link}
                     className={
                       index === 0
-                        ? 'rounded-full bg-white px-6 text-black hover:bg-blue-100'
-                        : 'rounded-full border-white/25 bg-white/5 px-6 text-white backdrop-blur hover:bg-white/10'
+                        ? 'group h-12 min-w-40 rounded-lg border border-blue-400/20 bg-[#075bd8] px-7 text-sm font-semibold text-white shadow-[0_10px_30px_rgba(0,102,255,.32),0_0_24px_rgba(0,102,255,.18)] hover:bg-[#0868f2] hover:shadow-[0_12px_34px_rgba(0,102,255,.42),0_0_28px_rgba(0,102,255,.24)] focus-visible:ring-blue-400/40'
+                        : 'h-12 min-w-32 rounded-lg border border-slate-500/70 bg-[#07101d]/70 px-7 text-sm font-semibold text-white shadow-none backdrop-blur-sm hover:border-slate-300/80 hover:bg-white/[.06] hover:text-white focus-visible:ring-slate-400/30'
                     }
-                  />
+                    size="lg"
+                  >
+                    {index === 0 && (
+                      <ArrowRight className="ml-1 size-4 transition-transform group-hover:translate-x-1" />
+                    )}
+                  </CMSLink>
                 </li>
               ))}
             </ul>
